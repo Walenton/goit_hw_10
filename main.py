@@ -50,8 +50,8 @@ class Record:
         for phone in self.phones:
             if phone.value == phone_number:
                 return phone
-        else:
-            raise ValueError(f'phone {phone_number} not found in the record')          
+        # else:
+        #     raise ValueError(f'phone {phone_number} not found in the record')          
 
     def __str__(self) -> str:
         return f"Contact name: {self.name.value}, phones: {'; '.join(p.value for p in self.phones)}"    
@@ -62,10 +62,11 @@ class AddressBook(UserDict):
         self.data[record.name.value] = record
         
     def find(self, name: str) -> str:
-        return self.data[name]
+        return self.data.get(name)
 
     def delete(self, name: str) -> None:
-        self.data.pop(name)
+        if self.find(name):
+            self.data.pop(name)
 
 
 
